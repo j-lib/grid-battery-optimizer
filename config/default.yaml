@@ -1,0 +1,26 @@
+# Default settings. Copy and edit to run a different region, period or battery.
+
+data:
+  # EIA balancing-authority code. DUK = Duke Energy Carolinas.
+  # Others: CPLE (Duke Energy Progress East), PJM, ERCO (ERCOT), CISO (CAISO).
+  region: DUK
+  start: "2024-01-01"
+  end: "2026-10-31"
+  raw_dir: data/raw
+  # Local time zone used for calendar features (hour of day, weekday, holidays)
+  timezone: America/New_York
+  # Interpolate gaps up to this many hours; longer gaps stay missing
+  max_gap_hours: 3
+
+forecast:
+  # Day-ahead: forecasts for each day are made with data through the previous day
+  horizon_hours: 24
+  backtest_days: 90
+
+# Battery used from v2 (optimization) onward
+battery:
+  energy_mwh: 10.0
+  power_mw: 2.5
+  round_trip_efficiency: 0.90
+  min_soc_fraction: 0.10
+  max_soc_fraction: 0.95
