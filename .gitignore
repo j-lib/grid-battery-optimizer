@@ -1,5 +1,5 @@
 # Data and generated results (results/figures is kept for README charts)
-data/
+/data/
 results/*.csv
 
 # Secrets
