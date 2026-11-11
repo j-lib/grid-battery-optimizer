@@ -41,7 +41,20 @@ Settings (region, dates, backtest length, battery specs) live in [`config/defaul
 
 ## Results
 
-_Coming with the first real-data run: baseline accuracy for Duke Energy Carolinas over the last 90 days._
+First real-data run (Nov 11, 2026): hourly demand for Duke Energy Carolinas (EIA region `DUK`), Jan 2024 – Oct 2026, scored on the last 90 days (2,160 hours, Aug–Oct 2026).
+
+| Baseline | MAE (MWh) | RMSE (MWh) | MAPE |
+|---|---:|---:|---:|
+| **Naive yesterday** (same hour, previous day) | **841** | **1,193** | **6.3%** |
+| Same-hour mean, last 7 days | 1,146 | 1,550 | 8.8% |
+| Seasonal naive (same hour, last week) | 1,491 | 2,049 | 11.4% |
+
+**Takeaways**
+- Yesterday's load is the best simple predictor: demand follows the weather, and weather changes more over a week than over a day.
+- The weekly pattern matters less here than recent conditions, so averaging or lagging by a full week loses accuracy during the late-summer-to-fall transition.
+- **The bar for v0.2:** a forecast has to beat 6.3% MAPE and 841 MWh MAE on the same 90 days to be worth adding.
+
+Reproduce with `gridopt fetch` then `gridopt baseline --out results/baselines.csv`.
 
 ## Project structure
 
@@ -64,7 +77,7 @@ notebooks/         Exploration only; finished code moves into src/
 
 | Version | Adds | Status |
 |---|---|---|
-| **v0.1** | EIA data pipeline, calendar and lag features, baseline forecasts, metrics, tests, CI, Streamlit view | ✅ |
+| **v0.1** | EIA data pipeline, calendar and lag features, baseline forecasts, metrics, tests, CI, Streamlit view; first real-data results | ✅ |
 | **v0.2** | Gradient-boosting forecasts; battery model; day-ahead LP schedule; market prices (PJM or ERCOT); backtested savings; Monte Carlo testing | ⏳ |
 | **v0.3** | Mixed-integer scheduling, scenario-based stochastic optimization, dynamic-programming policy, probabilistic forecasts | |
 | **v0.4** | Statistical time-series benchmarks, database backend, decision-focused learning experiments | |
