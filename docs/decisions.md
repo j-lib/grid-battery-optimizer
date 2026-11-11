@@ -17,3 +17,15 @@ A running log of choices and why they were made.
 **Data is downloaded, not committed.** Keeps the repository small and every result reproducible from the public source.
 
 **Region: Duke Energy Carolinas.** Local, large and growing. It is a regulated utility rather than an organized wholesale market, so there is no public hourly price; the arbitrage version (v0.2) will use public prices from a market region (PJM or ERCOT), while the Duke version can be framed as peak reduction.
+
+## 2026-11 — v0.2 plan
+
+**Peak shaving first, arbitrage second.** Duke Energy Carolinas has no public market price, so the first battery objective is cutting the daily peak of Duke's own load, which uses the demand forecast directly and matches why utilities buy storage. Arbitrage on ERCOT prices follows.
+
+**Battery sized to the system.** 10 MWh is invisible against roughly 15,000 MW of load. The default is now 200 MWh / 50 MW, about the size of Duke's Allen battery.
+
+**Weather: actuals now, forecasts later.** Training and testing on actual temperatures overstates accuracy, because a day-ahead forecaster only has a weather forecast. Results using actuals will be labeled as such; switching to Open-Meteo historical forecasts is the honest version.
+
+**Score decisions, not just forecasts.** Every forecast is also judged by regret: the gap between the battery schedule it produces and the one perfect foresight would produce. Lower MAPE does not guarantee lower regret.
+
+**Heavy dependencies are optional extras.** LightGBM, SciPy and gridstatus install with `.[ml]`, `.[opt]` and `.[prices]`, so the base package and CI stay light.
