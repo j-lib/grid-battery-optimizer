@@ -19,6 +19,9 @@ dependencies = [
 
 [project.optional-dependencies]
 app = ["streamlit>=1.36"]
+ml = ["lightgbm>=4.3"]
+opt = ["scipy>=1.11"]
+prices = ["gridstatus>=0.27"]
 dev = ["pytest>=8.0"]
 
 [project.scripts]
